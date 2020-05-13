@@ -24,11 +24,14 @@ int main(int argc, char* args[]) {
 	// set up drawing pipeline
 	Tiny::view.pipeline = [&]() {
 		// prepare render target
-		Tiny::view.target(color::black);
+		//Tiny::view.target(color::black);
+		Tiny::view.target(glm::vec3(0.5, 0.5, 0.5));
+
 		// prepare shader
 		defaultShader.use();
 		defaultShader.uniform("model", mesh.model);
 		defaultShader.uniform("projectionCamera", projection * camera);
+
 		// render to target
 		//mesh.render(GL_LINES);
 		mesh.render(GL_TRIANGLES);
