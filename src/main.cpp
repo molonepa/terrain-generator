@@ -30,7 +30,8 @@ int main(int argc, char* args[]) {
 		defaultShader.uniform("model", mesh.model);
 		defaultShader.uniform("projectionCamera", projection * camera);
 		// render to target
-		mesh.render(GL_LINES);
+		//mesh.render(GL_LINES);
+		mesh.render(GL_TRIANGLES);
 	};
 
 	Tiny::loop([&](){

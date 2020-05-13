@@ -19,5 +19,7 @@ void main(void) {
 	gl_Position = projectionCamera * vec4(ex_FragPos, 1.0f);
 
 	//Color from Normal Vector
-	ex_Color = vec4(normalize(in_Normal), 1.0);
+	vec3 color = normalize(in_Normal);
+	ex_Color = vec4(0.0, color.g, 0.0, 1.0);
+	//ex_Color = vec4(1.0, 1.0, 1.0, 1.0);
 }

@@ -24,25 +24,6 @@ void setup(){
 	projection = glm::ortho(-(float)Tiny::view.WIDTH*zoom, (float)Tiny::view.WIDTH*zoom, -(float)Tiny::view.HEIGHT*zoom, (float)Tiny::view.HEIGHT*zoom, -800.0f, 500.0f);
 
 	generateNoiseMap(mapSize, heightmap, scale, lacunarity, gain, numOctaves, normalise);
-	//float min, max = 0.0;
-	//for (int y = 0; y < mapSize; y++) {
-		//for (int x = 0; x < mapSize; x++) {
-			//float nx = (float)x * scale / (float)mapSize;
-			//float ny = (float)y * scale / (float)mapSize;
-			//heightmap[x][y] = stb_perlin_fbm_noise3(nx, ny, scale, lacunarity, gain, numOctaves);
-
-			//if (heightmap[x][y] > max) { max = heightmap[x][y]; }
-			//if (heightmap[x][y] < min) { min = heightmap[x][y]; }
-		//}
-	//}
-
-	//if (normalise) {
-		//for (int y = 0; y < mapSize; y++) {
-			//for (int x = 0; x < mapSize; x++) {
-				//heightmap[x][y] = (heightmap[x][y] - min) / (max - min);
-			//}
-		//}
-	//}
 };
 
 std::function<void()> eventHandler = [&](){
