@@ -1,2 +1,2 @@
 # terragen
-Terrain Generation with simulated hydraulic erosion
+Perlin-based terrain generation with simulated hydraulic erosion
