@@ -1,4 +1,4 @@
-#include "../../TinyEngine/TinyEngine.h"
+#include "include/TinyEngine/TinyEngine.h"
 #include "include/modelGeneration.h"
 
 int main(int argc, char* args[]) {
@@ -17,7 +17,7 @@ int main(int argc, char* args[]) {
 
 	// set up mesh and shader
 	Model mesh(_construct);
-	mesh.translate(glm::vec3(-32.0, -15.0, -32.0));
+	mesh.translate(glm::vec3(-256.0, 0.0, -256.0));
 
 	Shader defaultShader("shader/default.vs", "shader/default.fs", {"in_Position", "in_Normal"});
 

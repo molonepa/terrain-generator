@@ -11,12 +11,12 @@ float heightmap[512][512] = {0.0};
 
 const int WIDTH = 1200;
 const int HEIGHT = 800;
-glm::vec3 viewPos = glm::vec3(50, 1, 50);
-float zoom = 0.05;
+glm::vec3 viewPos = glm::vec3(0, 100, 0);
+float zoom = 0.3;
 float zoomInc = 0.001;
 float rotation = 0.0f;
-glm::vec3 cameraPos = glm::vec3(50, 50, 50);
-glm::vec3 lookPos = glm::vec3(0, 0, 0);
+glm::vec3 cameraPos = glm::vec3(0, 100, 0);
+glm::vec3 lookPos = glm::vec3(256, 0, 256);
 glm::mat4 camera = glm::lookAt(cameraPos, lookPos, glm::vec3(0, 1, 0));
 glm::mat4 projection;
 
