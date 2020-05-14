@@ -20,6 +20,7 @@ void main(void) {
 
 	//Color from Normal Vector
 	vec3 color = normalize(in_Normal);
-	ex_Color = vec4(0.0, color.g, 0.0, 1.0);
+	//ex_Color = vec4(0.0, color.g, 0.0, 1.0);
+	ex_Color = vec4(color, 1.0);
 	//ex_Color = vec4(1.0, 1.0, 1.0, 1.0);
 }
