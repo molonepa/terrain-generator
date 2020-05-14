@@ -2,7 +2,7 @@
 OBJS = src/main.cpp
 
 NOISE = src/noiseMapGeneration.cpp
-TINY = ../TinyEngine/include/imgui/imgui.cpp ../TinyEngine/include/imgui/imgui_demo.cpp ../TinyEngine/include/imgui/imgui_draw.cpp ../TinyEngine/include/imgui/imgui_widgets.cpp ../TinyEngine/include/imgui/imgui_impl_opengl3.cpp ../TinyEngine/include/imgui/imgui_impl_sdl.cpp
+TINY = src/include/TinyEngine/include/imgui/imgui.cpp src/include/TinyEngine/include/imgui/imgui_demo.cpp src/include/TinyEngine/include/imgui/imgui_draw.cpp src/include/TinyEngine/include/imgui/imgui_widgets.cpp src/include/TinyEngine/include/imgui/imgui_impl_opengl3.cpp src/include/TinyEngine/include/imgui/imgui_impl_sdl.cpp
 TINYLINK = -lX11 -lpthread -lSDL2 -lnoise -lSDL2_image -lSDL2_mixer -lSDL2_ttf -lGL -lGLEW -lboost_serialization -lboost_system -lboost_filesystem
 
 CC = g++ -std=c++17
