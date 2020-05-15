@@ -13,51 +13,27 @@ float heightmap[512][512] = {0.0};
 // view parameters
 const int WIDTH = 1200;
 const int HEIGHT = 800;
-float zoom = 0.50;
+float zoom = 0.25;
 float zoomInc = 0.001;
 float rotation = 0.0f;
-glm::vec3 cameraPos = glm::vec3(0, (mapSize / 8), 0);
+glm::vec3 cameraPos = glm::vec3(mapSize, (mapSize / 4), 0);
 glm::vec3 lookPos = glm::vec3((mapSize / 2), 0, (mapSize / 2));
 glm::mat4 camera = glm::lookAt(cameraPos, lookPos, glm::vec3(0, 1, 0));
 glm::mat4 projection;
+float fov = 50.0f;
 
 // lighting parameters
 glm::vec3 lightPos = glm::vec3(mapSize, (mapSize / 2), mapSize);
 glm::vec3 lightColor = glm::vec3(1.0, 1.0, 1.0);
 
 void setup(){
-	//projection = glm::ortho(-(float)Tiny::view.WIDTH*zoom, (float)Tiny::view.WIDTH*zoom, -(float)Tiny::view.HEIGHT*zoom, (float)Tiny::view.HEIGHT*zoom, -800.0f, 500.0f);
-	projection = glm::ortho(-(float)Tiny::view.WIDTH*zoom, (float)Tiny::view.WIDTH*zoom, -(float)Tiny::view.HEIGHT*zoom, (float)Tiny::view.HEIGHT*zoom, -800.0f, 500.0f);
+	projection = glm::perspective(glm::radians(fov), (float)WIDTH/(float)HEIGHT, 0.1f, 1024.0f);
 
 	generateNoiseMap(mapSize, heightmap, scale, lacunarity, gain, numOctaves, normalise);
 };
 
 std::function<void()> eventHandler = [&](){
-	if (!Tiny::event.scroll.empty()) {
-		if (Tiny::event.scroll.back().wheel.y > 0.99 && zoom <= 0.3) {
-			zoom += zoomInc;
-			//projection = glm::ortho(-(float)WIDTH*zoom, (float)WIDTH*zoom, -(float)HEIGHT*zoom, (float)HEIGHT*zoom, -800.0f, 500.0f);
-			projection = glm::ortho(-(float)WIDTH*zoom, (float)WIDTH*zoom, -(float)HEIGHT*zoom, (float)HEIGHT*zoom, -800.0f, 500.0f);
-		}
-		else if (Tiny::event.scroll.back().wheel.y < -0.99 && zoom > 0.005) {
-			zoom -= zoomInc;
-			//projection = glm::ortho(-(float)WIDTH*zoom, (float)WIDTH*zoom, -(float)HEIGHT*zoom, (float)HEIGHT*zoom, -800.0f, 500.0f);
-			projection = glm::ortho(-(float)WIDTH*zoom, (float)WIDTH*zoom, -(float)HEIGHT*zoom, (float)HEIGHT*zoom, -800.0f, 500.0f);
-		}
-		else if (Tiny::event.scroll.back().wheel.x < -0.8) {
-			rotation += 1.5f;
-			camera = glm::rotate(camera, glm::radians(1.5f), glm::vec3(0.0f, 1.0f, 0.0f));
-		}
-		else if (Tiny::event.scroll.back().wheel.x > 0.8) {
-			rotation -= 1.5f;
-			camera = glm::rotate(camera, glm::radians(-1.5f), glm::vec3(0.0f, 1.0f, 0.0f));
-		}
 
-		if (rotation < 0.0) rotation = 360.0 + rotation;
-		else if(rotation > 360.0) rotation = rotation - 360.0;
-		camera = glm::rotate(glm::lookAt(cameraPos, lookPos, glm::vec3(0, 1, 0)), glm::radians(rotation), glm::vec3(0, 1, 0));
-		Tiny::event.scroll.pop_back();
-	}
 };
 
 // Model Constructing Function

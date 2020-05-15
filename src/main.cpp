@@ -17,7 +17,7 @@ int main(int argc, char* args[]) {
 
 	// set up mesh and shader
 	Model mesh(_construct);
-	mesh.translate(glm::vec3(-256.0, 0.0, -256.0));
+	mesh.translate(glm::vec3(0.0, 0.0, 0.0));
 
 	Shader defaultShader("shader/default.vs", "shader/default.fs", {"in_Position", "in_Normal"});
 
@@ -31,9 +31,9 @@ int main(int argc, char* args[]) {
 		defaultShader.use();
 		defaultShader.uniform("lightPos", lightPos);
 		defaultShader.uniform("lightColor", lightColor);
-		defaultShader.uniform("cameraPos", glm::vec3(camera[3][0], camera[3][1], camera[3][2]));
 		defaultShader.uniform("model", mesh.model);
 		defaultShader.uniform("projectionCamera", projection * camera);
+		defaultShader.uniform("cameraPos", glm::vec3(camera[3][0], camera[3][1], camera[3][2]));
 
 		// render to target
 		//mesh.render(GL_LINES);
@@ -42,7 +42,8 @@ int main(int argc, char* args[]) {
 
 	Tiny::loop([&](){
 			// rotate camera
-			camera = glm::rotate(camera, glm::radians(0.1f), glm::vec3(0.0f, 1.0f, 0.0f));
+			//camera = glm::rotate(camera, glm::radians(0.1f), glm::vec3(0.0f, 1.0f, 0.0f));
+			defaultShader.uniform("cameraPos", glm::vec3(camera[3][0], camera[3][1], camera[3][2]));
 	});
 
 	Tiny::quit();
