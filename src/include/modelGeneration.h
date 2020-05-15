@@ -1,26 +1,32 @@
 #include "noiseMapGeneration.h"
 
+// heightmap initialisation and generation parameters
 int mapSize = 512;
-float scale = 30.0;
+float scale = 15.0;
 float lacunarity = 2.0f;
-float gain = 0.5f;
+float gain = 0.4f;
 int numOctaves = 7;
-bool normalise = true;
-
+//bool normalise = true;
+bool normalise = false;
 float heightmap[512][512] = {0.0};
 
+// view parameters
 const int WIDTH = 1200;
 const int HEIGHT = 800;
-glm::vec3 viewPos = glm::vec3(0, 100, 0);
-float zoom = 0.3;
+float zoom = 0.50;
 float zoomInc = 0.001;
 float rotation = 0.0f;
-glm::vec3 cameraPos = glm::vec3(0, 100, 0);
-glm::vec3 lookPos = glm::vec3(256, 0, 256);
+glm::vec3 cameraPos = glm::vec3(0, (mapSize / 8), 0);
+glm::vec3 lookPos = glm::vec3((mapSize / 2), 0, (mapSize / 2));
 glm::mat4 camera = glm::lookAt(cameraPos, lookPos, glm::vec3(0, 1, 0));
 glm::mat4 projection;
 
+// lighting parameters
+glm::vec3 lightPos = glm::vec3(mapSize, (mapSize / 2), mapSize);
+glm::vec3 lightColor = glm::vec3(1.0, 1.0, 1.0);
+
 void setup(){
+	//projection = glm::ortho(-(float)Tiny::view.WIDTH*zoom, (float)Tiny::view.WIDTH*zoom, -(float)Tiny::view.HEIGHT*zoom, (float)Tiny::view.HEIGHT*zoom, -800.0f, 500.0f);
 	projection = glm::ortho(-(float)Tiny::view.WIDTH*zoom, (float)Tiny::view.WIDTH*zoom, -(float)Tiny::view.HEIGHT*zoom, (float)Tiny::view.HEIGHT*zoom, -800.0f, 500.0f);
 
 	generateNoiseMap(mapSize, heightmap, scale, lacunarity, gain, numOctaves, normalise);
@@ -30,10 +36,12 @@ std::function<void()> eventHandler = [&](){
 	if (!Tiny::event.scroll.empty()) {
 		if (Tiny::event.scroll.back().wheel.y > 0.99 && zoom <= 0.3) {
 			zoom += zoomInc;
+			//projection = glm::ortho(-(float)WIDTH*zoom, (float)WIDTH*zoom, -(float)HEIGHT*zoom, (float)HEIGHT*zoom, -800.0f, 500.0f);
 			projection = glm::ortho(-(float)WIDTH*zoom, (float)WIDTH*zoom, -(float)HEIGHT*zoom, (float)HEIGHT*zoom, -800.0f, 500.0f);
 		}
 		else if (Tiny::event.scroll.back().wheel.y < -0.99 && zoom > 0.005) {
-			zoom += zoomInc;
+			zoom -= zoomInc;
+			//projection = glm::ortho(-(float)WIDTH*zoom, (float)WIDTH*zoom, -(float)HEIGHT*zoom, (float)HEIGHT*zoom, -800.0f, 500.0f);
 			projection = glm::ortho(-(float)WIDTH*zoom, (float)WIDTH*zoom, -(float)HEIGHT*zoom, (float)HEIGHT*zoom, -800.0f, 500.0f);
 		}
 		else if (Tiny::event.scroll.back().wheel.x < -0.8) {

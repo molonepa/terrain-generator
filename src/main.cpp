@@ -29,6 +29,9 @@ int main(int argc, char* args[]) {
 
 		// prepare shader
 		defaultShader.use();
+		defaultShader.uniform("lightPos", lightPos);
+		defaultShader.uniform("lightColor", lightColor);
+		defaultShader.uniform("cameraPos", glm::vec3(camera[3][0], camera[3][1], camera[3][2]));
 		defaultShader.uniform("model", mesh.model);
 		defaultShader.uniform("projectionCamera", projection * camera);
 
