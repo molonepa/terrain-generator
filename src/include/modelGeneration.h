@@ -18,9 +18,11 @@ float zoomInc = 0.001;
 float rotation = 0.0f;
 glm::vec3 cameraPos = glm::vec3(mapSize, (mapSize / 4), 0);
 glm::vec3 lookPos = glm::vec3((mapSize / 2), 0, (mapSize / 2));
-glm::mat4 camera = glm::lookAt(cameraPos, lookPos, glm::vec3(0, 1, 0));
+glm::vec3 cameraUp = glm::vec3(0, 1, 0);
+glm::mat4 camera = glm::lookAt(cameraPos, lookPos, cameraUp);
 glm::mat4 projection;
 float fov = 50.0f;
+float cameraMoveInc = 10.0f;
 
 // lighting parameters
 glm::vec3 lightPos = glm::vec3(mapSize, (mapSize / 2), mapSize);
@@ -33,7 +35,25 @@ void setup(){
 };
 
 std::function<void()> eventHandler = [&](){
-
+	if (!Tiny::event.keys.empty()) {
+		glm::vec3 cameraFront = glm::normalize(glm::vec3(cameraPos.x - lookPos.x, cameraPos.y - lookPos.y, cameraPos.z - lookPos.z));
+		if (Tiny::event.keys.back().key.keysym.sym == SDLK_w) {
+			cameraPos -= cameraFront * cameraMoveInc;
+			camera = glm::lookAt(cameraPos, lookPos, cameraUp);
+		}
+		else if (Tiny::event.keys.back().key.keysym.sym == SDLK_s) {
+			cameraPos += cameraFront * cameraMoveInc;
+			camera = glm::lookAt(cameraPos, lookPos, cameraUp);
+		}
+		else if (Tiny::event.keys.back().key.keysym.sym == SDLK_a) {
+			cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraMoveInc;
+			camera = glm::lookAt(cameraPos, lookPos, cameraUp);
+		}
+		else if (Tiny::event.keys.back().key.keysym.sym == SDLK_d) {
+			cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraMoveInc;
+			camera = glm::lookAt(cameraPos, lookPos, cameraUp);
+		}
+	}
 };
 
 // Model Constructing Function

@@ -24,7 +24,6 @@ int main(int argc, char* args[]) {
 	// set up drawing pipeline
 	Tiny::view.pipeline = [&]() {
 		// prepare render target
-		//Tiny::view.target(color::black);
 		Tiny::view.target(glm::vec3(0.5, 0.5, 0.5));
 
 		// prepare shader
@@ -33,7 +32,7 @@ int main(int argc, char* args[]) {
 		defaultShader.uniform("lightColor", lightColor);
 		defaultShader.uniform("model", mesh.model);
 		defaultShader.uniform("projectionCamera", projection * camera);
-		defaultShader.uniform("cameraPos", glm::vec3(camera[3][0], camera[3][1], camera[3][2]));
+		defaultShader.uniform("cameraPos", cameraPos);
 
 		// render to target
 		//mesh.render(GL_LINES);
@@ -41,9 +40,7 @@ int main(int argc, char* args[]) {
 	};
 
 	Tiny::loop([&](){
-			// rotate camera
-			//camera = glm::rotate(camera, glm::radians(0.1f), glm::vec3(0.0f, 1.0f, 0.0f));
-			defaultShader.uniform("cameraPos", glm::vec3(camera[3][0], camera[3][1], camera[3][2]));
+		/* ... */
 	});
 
 	Tiny::quit();
