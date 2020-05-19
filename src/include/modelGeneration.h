@@ -13,9 +13,6 @@ float heightmap[512][512] = {0.0};
 // view parameters
 const int WIDTH = 1200;
 const int HEIGHT = 800;
-float zoom = 0.25;
-float zoomInc = 0.001;
-float rotation = 0.0f;
 glm::vec3 cameraPos = glm::vec3(mapSize, (mapSize / 4), 0);
 glm::vec3 lookPos = glm::vec3((mapSize / 2), 0, (mapSize / 2));
 glm::vec3 cameraUp = glm::vec3(0, 1, 0);
@@ -24,9 +21,12 @@ glm::mat4 projection;
 float fov = 50.0f;
 float cameraMoveInc = 10.0f;
 
-// lighting parameters
+// shading parameters
 glm::vec3 lightPos = glm::vec3(mapSize, (mapSize / 2), mapSize);
 glm::vec3 lightColor = glm::vec3(1.0, 1.0, 1.0);
+float slope = 0.8;
+glm::vec3 flatColor = glm::vec3(0.27, 0.64, 0.27);
+glm::vec3 steepColor = glm::vec3(0.7);
 
 void setup(){
 	projection = glm::perspective(glm::radians(fov), (float)WIDTH/(float)HEIGHT, 0.1f, 1024.0f);

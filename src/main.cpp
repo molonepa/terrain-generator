@@ -33,6 +33,9 @@ int main(int argc, char* args[]) {
 		defaultShader.uniform("model", mesh.model);
 		defaultShader.uniform("projectionCamera", projection * camera);
 		defaultShader.uniform("cameraPos", cameraPos);
+		defaultShader.uniform("flatColor", flatColor);
+		defaultShader.uniform("steepColor", steepColor);
+		defaultShader.uniform("slope", slope);
 
 		// render to target
 		//mesh.render(GL_LINES);
