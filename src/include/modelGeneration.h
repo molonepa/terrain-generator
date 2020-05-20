@@ -1,19 +1,24 @@
 #include "noiseMapGeneration.h"
+#include "hydraulicErosion.h"
 
 // heightmap initialisation and generation parameters
 int mapSize = 512;
-float scale = 15.0;
-float lacunarity = 2.0f;
+float scale = 20.0;
+float lacunarity = 1.9f;
 float gain = 0.4f;
-int numOctaves = 7;
-//bool normalise = true;
-bool normalise = false;
+int numOctaves = 3;
+bool normalise = true;
+//bool normalise = false;
 float heightmap[512][512] = {0.0};
+
+// erosion parameters
+int iterations = 100000;
+ErosionParameters parameters;
 
 // view parameters
 const int WIDTH = 1200;
 const int HEIGHT = 800;
-glm::vec3 cameraPos = glm::vec3(mapSize, (mapSize / 4), 0);
+glm::vec3 cameraPos = glm::vec3(-(mapSize / 2), (mapSize / 3), -(mapSize / 4));
 glm::vec3 lookPos = glm::vec3((mapSize / 2), 0, (mapSize / 2));
 glm::vec3 cameraUp = glm::vec3(0, 1, 0);
 glm::mat4 camera = glm::lookAt(cameraPos, lookPos, cameraUp);
@@ -28,7 +33,9 @@ float slope = 0.8;
 glm::vec3 flatColor = glm::vec3(0.27, 0.64, 0.27);
 glm::vec3 steepColor = glm::vec3(0.7);
 
-void setup(){
+bool doErosion = false;
+
+void setup() {
 	projection = glm::perspective(glm::radians(fov), (float)WIDTH/(float)HEIGHT, 0.1f, 1024.0f);
 
 	generateNoiseMap(mapSize, heightmap, scale, lacunarity, gain, numOctaves, normalise);
@@ -52,6 +59,9 @@ std::function<void()> eventHandler = [&](){
 		else if (Tiny::event.keys.back().key.keysym.sym == SDLK_d) {
 			cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraMoveInc;
 			camera = glm::lookAt(cameraPos, lookPos, cameraUp);
+		}
+		else if (Tiny::event.keys.back().key.keysym.sym == SDLK_e) {
+			doErosion = true;
 		}
 	}
 };

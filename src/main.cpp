@@ -43,7 +43,12 @@ int main(int argc, char* args[]) {
 	};
 
 	Tiny::loop([&](){
-		/* ... */
+		if (doErosion) {
+			erode(mapSize, heightmap, iterations, parameters, scale);
+			mesh.reconstruct(mapSize, heightmap, scale);
+			mesh.update();
+			doErosion = false;
+		}
 	});
 
 	Tiny::quit();
