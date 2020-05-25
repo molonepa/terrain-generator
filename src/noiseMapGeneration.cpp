@@ -1,3 +1,4 @@
+#include <math.h>
 #include <time.h>
 #include <noise/noise.h>
 #include "include/noiseMapGeneration.h"
@@ -17,7 +18,7 @@ void generateNoiseMap(int mapSize, float map[][512], float lacunarity, float per
 		for (int x = 0; x < mapSize; x++) {
 			float nx = (float)x / (float)mapSize;
 			float ny = (float)y / (float)mapSize;
-			map[x][y] = perlin.GetValue(ny, nx, SEED);
+			map[x][y] = -fabs(perlin.GetValue(ny, nx, SEED));
 
 			if (map[x][y] > max) { max = map[x][y]; }
 			if (map[x][y] < min) { min = map[x][y]; }
