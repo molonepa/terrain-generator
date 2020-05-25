@@ -24,7 +24,7 @@ int main(int argc, char* args[]) {
 	// set up drawing pipeline
 	Tiny::view.pipeline = [&]() {
 		// prepare render target
-		Tiny::view.target(glm::vec3(0.5, 0.5, 0.5));
+		Tiny::view.target(glm::vec3(0.3, 0.5, 0.8));
 
 		// prepare shader
 		defaultShader.use();

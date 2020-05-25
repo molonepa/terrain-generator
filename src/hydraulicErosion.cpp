@@ -32,7 +32,7 @@ void erode(int mapSize, float heightmap[][512], int iterations, ErosionParameter
 			drop.speed *= (1.0 - params.dt * params.friction); // apply friction
 
 			// if particle's updated position is out of bounds
-			if (!glm::all(glm::greaterThan(drop.pos, glm::vec2(0))) || !glm::all(glm::lessThanEqual(drop.pos, glm::vec2(mapSize)))) {
+			if (!glm::all(glm::greaterThanEqual(drop.pos, glm::vec2(0))) || !glm::all(glm::lessThanEqual(drop.pos, glm::vec2(mapSize)))) {
 				break;
 			}
 
