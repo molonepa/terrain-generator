@@ -16,6 +16,7 @@ glm::vec3 surfaceNormal(float scale, float heightmap[][512], int i, int j) {
 }
 
 void erode(int mapSize, float heightmap[][512], int iterations, ErosionParameters params, float scale) {
+	//#pragma omp parallel for
 	for (int i = 0; i < iterations; i++) {
 		printf("%d/%d\r", i, iterations);
 		// spawn new particle at random position on heightmap

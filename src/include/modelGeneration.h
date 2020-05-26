@@ -84,6 +84,12 @@ std::function<void(Model* m)> _construct = [&](Model* h){
 			h->indices.push_back(h->positions.size()/3+0);
 			h->indices.push_back(h->positions.size()/3+1);
 			h->indices.push_back(h->positions.size()/3+2);
+			h->indices.push_back(h->positions.size()/3+3);
+			h->indices.push_back(h->positions.size()/3+4);
+			h->indices.push_back(h->positions.size()/3+5);
+			h->indices.push_back(h->positions.size()/3+6);
+			h->indices.push_back(h->positions.size()/3+7);
+			h->indices.push_back(h->positions.size()/3+8);
 
 			h->positions.push_back(a.x);
 			h->positions.push_back(a.y);
@@ -95,18 +101,31 @@ std::function<void(Model* m)> _construct = [&](Model* h){
 			h->positions.push_back(c.y);
 			h->positions.push_back(c.z);
 
-			glm::vec3 n1 = glm::cross(a-b, c-b);
+			glm::vec3 aNorm = surfaceNormal(scale, heightmap, i, j);
+			glm::vec3 bNorm = surfaceNormal(scale, heightmap, i+1, j);
+			glm::vec3 cNorm = surfaceNormal(scale, heightmap, i, j+1);
+			glm::vec3 dNorm = surfaceNormal(scale, heightmap, i+1, j+1);
 
-			for(int i = 0; i < 3; i++){
-				h->normals.push_back(n1.x);
-				h->normals.push_back(n1.y);
-				h->normals.push_back(n1.z);
-			}
+			h->normals.push_back(aNorm.x);
+			h->normals.push_back(aNorm.y);
+			h->normals.push_back(aNorm.z);
+			h->normals.push_back(bNorm.x);
+			h->normals.push_back(bNorm.y);
+			h->normals.push_back(bNorm.z);
+			h->normals.push_back(cNorm.x);
+			h->normals.push_back(cNorm.y);
+			h->normals.push_back(cNorm.z);
 
 			//Lower Triangle
 			h->indices.push_back(h->positions.size()/3+0);
 			h->indices.push_back(h->positions.size()/3+1);
 			h->indices.push_back(h->positions.size()/3+2);
+			h->indices.push_back(h->positions.size()/3+3);
+			h->indices.push_back(h->positions.size()/3+4);
+			h->indices.push_back(h->positions.size()/3+5);
+			h->indices.push_back(h->positions.size()/3+6);
+			h->indices.push_back(h->positions.size()/3+7);
+			h->indices.push_back(h->positions.size()/3+8);
 
 			h->positions.push_back(d.x);
 			h->positions.push_back(d.y);
@@ -118,13 +137,15 @@ std::function<void(Model* m)> _construct = [&](Model* h){
 			h->positions.push_back(b.y);
 			h->positions.push_back(b.z);
 
-			glm::vec3 n2 = glm::cross(d-c, b-c);
-
-			for(int i = 0; i < 3; i++){
-				h->normals.push_back(n2.x);
-				h->normals.push_back(n2.y);
-				h->normals.push_back(n2.z);
-			}
+			h->normals.push_back(dNorm.x);
+			h->normals.push_back(dNorm.y);
+			h->normals.push_back(dNorm.z);
+			h->normals.push_back(cNorm.x);
+			h->normals.push_back(cNorm.y);
+			h->normals.push_back(cNorm.z);
+			h->normals.push_back(bNorm.x);
+			h->normals.push_back(bNorm.y);
+			h->normals.push_back(bNorm.z);
 		}
 	}
 };
