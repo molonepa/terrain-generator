@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "include/hydraulicErosion.h"
 
 glm::vec3 surfaceNormal(float scale, float heightmap[][512], int i, int j) {
@@ -16,9 +15,8 @@ glm::vec3 surfaceNormal(float scale, float heightmap[][512], int i, int j) {
 }
 
 void erode(int mapSize, float heightmap[][512], int iterations, ErosionParameters params, float scale) {
-	//#pragma omp parallel for
+	#pragma omp parallel for
 	for (int i = 0; i < iterations; i++) {
-		printf("%d/%d\r", i, iterations);
 		// spawn new particle at random position on heightmap
 		glm::vec2 newPos = glm::vec2(rand()%mapSize, rand()%mapSize);
 		Drop drop;
@@ -33,7 +31,7 @@ void erode(int mapSize, float heightmap[][512], int iterations, ErosionParameter
 			drop.speed *= (1.0 - params.dt * params.friction); // apply friction
 
 			// if particle's updated position is out of bounds
-			if (!glm::all(glm::greaterThanEqual(drop.pos, glm::vec2(0))) || !glm::all(glm::lessThanEqual(drop.pos, glm::vec2(mapSize)))) {
+			if (!glm::all(glm::greaterThanEqual(drop.pos, glm::vec2(0))) || !glm::all(glm::lessThan(drop.pos, glm::vec2(mapSize))) || drop.speed == glm::vec2(0.0)) {
 				break;
 			}
 

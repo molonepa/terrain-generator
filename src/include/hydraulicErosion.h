@@ -16,7 +16,7 @@ struct Drop {
 struct ErosionParameters {
 	float dt = 1.2;
 	float density = 1.0;
-	float evaporationRate = 0.001;
+	float evaporationRate = 0.01;
 	float depositionRate = 0.1;
 	float minVolume = 0.01;
 	float friction = 0.05;

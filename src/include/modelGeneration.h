@@ -3,7 +3,7 @@
 
 // heightmap initialisation and generation parameters
 int mapSize = 512;
-float scale = 100.0;
+float scale = 80.0;
 float lacunarity = 1.7f;
 float persistence = 0.60f;
 int numOctaves = 15;
@@ -12,7 +12,7 @@ bool normalise = true;
 float heightmap[512][512] = {0.0};
 
 // erosion parameters
-int iterations = 200000;
+int iterations = 100000;
 ErosionParameters parameters;
 
 // view parameters
