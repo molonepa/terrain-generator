@@ -3,8 +3,8 @@
 glm::vec3 surfaceNormal(float scale, float heightmap[][512], int i, int j) {
 	glm::vec3 n = glm::vec3(0.15) * glm::normalize(glm::vec3(scale * (heightmap[i][j] - heightmap[i+1][j]), 1.0, 0.0));
 	n += glm::vec3(0.15) * glm::normalize(glm::vec3(scale * (heightmap[i-1][j] - heightmap[i][j]), 1.0, 0.0));
-	n += glm::vec3(0.15) * glm::normalize(glm::vec3(scale * (heightmap[i][j] - heightmap[i][j+1]), 1.0, 0.0));
-	n += glm::vec3(0.15) * glm::normalize(glm::vec3(scale * (heightmap[i][j-1] - heightmap[i][j]), 1.0, 0.0));
+	n += glm::vec3(0.15) * glm::normalize(glm::vec3(0.0, 1.0, scale * (heightmap[i][j] - heightmap[i][j+1])));
+	n += glm::vec3(0.15) * glm::normalize(glm::vec3(0.0, 1.0, scale * (heightmap[i][j-1] - heightmap[i][j])));
 
 	n += glm::vec3(0.1) * glm::normalize(glm::vec3(scale*(heightmap[i][j]-heightmap[i+1][j+1])/sqrt(2), sqrt(2), scale*(heightmap[i][j]-heightmap[i+1][j+1])/sqrt(2)));
 	n += glm::vec3(0.1) * glm::normalize(glm::vec3(scale*(heightmap[i][j]-heightmap[i+1][j-1])/sqrt(2), sqrt(2), scale*(heightmap[i][j]-heightmap[i+1][j-1])/sqrt(2)));
@@ -31,7 +31,7 @@ void erode(int mapSize, float heightmap[][512], int iterations, ErosionParameter
 			drop.speed *= (1.0 - params.dt * params.friction); // apply friction
 
 			// if particle's updated position is out of bounds
-			if (!glm::all(glm::greaterThanEqual(drop.pos, glm::vec2(0))) || !glm::all(glm::lessThan(drop.pos, glm::vec2(mapSize))) || drop.speed == glm::vec2(0.0)) {
+			if (!glm::all(glm::greaterThanEqual(drop.pos, glm::vec2(0))) || !glm::all(glm::lessThan(drop.pos, glm::vec2(mapSize)))) {
 				break;
 			}
 

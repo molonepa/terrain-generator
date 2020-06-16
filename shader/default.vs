@@ -21,7 +21,6 @@ void main(void) {
 	//Fragment in Screen Space
 	gl_Position = projectionCamera * vec4(ex_FragPos, 1.0f);
 
-
 	if (normalize(ex_Normal).y < slope) {
 		ex_Color = steepColor;
 	}
