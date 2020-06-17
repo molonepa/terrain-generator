@@ -31,4 +31,9 @@ After:
 
 ### Future Additions
 
+* Simulated vegetation
+* Different hardness levels for different materials
+* Thermal erosion
+* Glacial erosion
+
 [linoise]: http://libnoise.sourceforge.net/index.html
