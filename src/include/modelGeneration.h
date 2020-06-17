@@ -27,10 +27,10 @@ float fov = 50.0f;
 float cameraMoveInc = 10.0f;
 
 // shading parameters
-glm::vec3 lightPos = glm::vec3(mapSize, (mapSize / 2), mapSize);
+glm::vec3 lightPos = glm::vec3(mapSize, (mapSize / 2), 0);
 glm::vec3 lightColor = glm::vec3(1.0, 1.0, 1.0);
 float slope = 0.9975;
-glm::vec3 flatColor = glm::vec3(0.6);
+glm::vec3 flatColor = glm::vec3(0.4);
 glm::vec3 steepColor = glm::vec3(0.4);
 
 bool doErosion = false;
