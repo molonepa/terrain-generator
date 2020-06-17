@@ -18,6 +18,7 @@ int main(int argc, char* args[]) {
 	// set up mesh and shader
 	Model mesh;
 	mesh.construct(mapSize, heightmap, scale);
+	mesh.update();
 	mesh.translate(glm::vec3(0.0, 0.0, 0.0));
 
 	Shader defaultShader("shader/default.vs", "shader/default.fs", {"in_Position", "in_Normal"});
