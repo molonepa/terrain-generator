@@ -16,7 +16,8 @@ int main(int argc, char* args[]) {
 	setup();
 
 	// set up mesh and shader
-	Model mesh(_construct);
+	Model mesh;
+	mesh.construct(mapSize, heightmap, scale);
 	mesh.translate(glm::vec3(0.0, 0.0, 0.0));
 
 	Shader defaultShader("shader/default.vs", "shader/default.fs", {"in_Position", "in_Normal"});
@@ -45,7 +46,7 @@ int main(int argc, char* args[]) {
 	Tiny::loop([&](){
 		if (doErosion) {
 			erode(mapSize, heightmap, iterations, parameters, scale);
-			mesh.reconstruct(mapSize, heightmap, scale);
+			mesh.construct(mapSize, heightmap, scale);
 			mesh.update();
 			doErosion = false;
 		}

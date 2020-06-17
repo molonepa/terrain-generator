@@ -1,6 +1,6 @@
 #include "include/hydraulicErosion.h"
 
-glm::vec3 surfaceNormal(float scale, float heightmap[][512], int i, int j) {
+glm::vec3 surfaceNormal(float scale, float heightmap[][1024], int i, int j) {
 	glm::vec3 n = glm::vec3(0.15) * glm::normalize(glm::vec3(scale * (heightmap[i][j] - heightmap[i+1][j]), 1.0, 0.0));
 	n += glm::vec3(0.15) * glm::normalize(glm::vec3(scale * (heightmap[i-1][j] - heightmap[i][j]), 1.0, 0.0));
 	n += glm::vec3(0.15) * glm::normalize(glm::vec3(0.0, 1.0, scale * (heightmap[i][j] - heightmap[i][j+1])));
@@ -14,7 +14,7 @@ glm::vec3 surfaceNormal(float scale, float heightmap[][512], int i, int j) {
 	return n;
 }
 
-void erode(int mapSize, float heightmap[][512], int iterations, ErosionParameters params, float scale) {
+void erode(int mapSize, float heightmap[][1024], int iterations, ErosionParameters params, float scale) {
 	#pragma omp parallel for
 	for (int i = 0; i < iterations; i++) {
 		// spawn new particle at random position on heightmap

@@ -22,7 +22,7 @@ struct ErosionParameters {
 	float friction = 0.05;
 };
 
-glm::vec3 surfaceNormal(float scale, float heightmap[][512], int i, int j);
+glm::vec3 surfaceNormal(float scale, float heightmap[][1024], int i, int j);
 
-void erode(int mapSize, float heightmap[][512], int iterations, ErosionParameters params, float scale);
+void erode(int mapSize, float heightmap[][1024], int iterations, ErosionParameters params, float scale);
 

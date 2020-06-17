@@ -11,3 +11,6 @@ OBJ_NAME = main
 
 all: $(OBJS)
 			$(CC) $(OBJS) $(TINY) $(COMPILER_FLAGS) $(LINKER_FLAGS) $(TINYLINK) $(OPENMP) -o $(OBJ_NAME)
+
+debug: $(OBJS)
+			$(CC) $(OBJS) $(TINY) $(COMPILER_FLAGS) $(LINKER_FLAGS) $(TINYLINK) $(OPENMP) -g

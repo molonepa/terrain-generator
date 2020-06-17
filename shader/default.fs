@@ -13,7 +13,7 @@ out vec4 fragColor;
 void main(void) {
 	vec3 result = vec3(0.0, 0.0, 0.0);
 
-	float ambientStrength = 0.4;
+	float ambientStrength = 0.6;
 	vec3 ambient = ambientStrength * lightColor;
 
 	vec3 norm = normalize(ex_Normal);
@@ -22,8 +22,8 @@ void main(void) {
 	float diff = max(dot(norm, lightDir), 0.0);
 	vec3 diffuse = diff * lightColor;
 
-	float specularStrength = 0.25;
-	int reflectivity = 32;
+	float specularStrength = 0.15;
+	int reflectivity = 8;
 	vec3 viewDir = normalize(cameraPos - ex_FragPos);
 	vec3 reflectDir = reflect(-lightDir, norm);
 

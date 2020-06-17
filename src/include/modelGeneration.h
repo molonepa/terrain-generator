@@ -2,17 +2,17 @@
 #include "hydraulicErosion.h"
 
 // heightmap initialisation and generation parameters
-int mapSize = 512;
-float scale = 80.0;
+int mapSize = 1024;
+float scale = 100.0;
 float lacunarity = 1.7f;
 float persistence = 0.60f;
 int numOctaves = 15;
 bool normalise = true;
 //bool normalise = false;
-float heightmap[512][512] = {0.0};
+float heightmap[1024][1024] = {0.0};
 
 // erosion parameters
-int iterations = 100000;
+int iterations = (mapSize * mapSize) / 2;
 ErosionParameters parameters;
 
 // view parameters
@@ -29,14 +29,14 @@ float cameraMoveInc = 10.0f;
 // shading parameters
 glm::vec3 lightPos = glm::vec3(mapSize, (mapSize / 2), mapSize);
 glm::vec3 lightColor = glm::vec3(1.0, 1.0, 1.0);
-float slope = 0.8;
-glm::vec3 flatColor = glm::vec3(0.8);
+float slope = 0.9975;
+glm::vec3 flatColor = glm::vec3(0.6);
 glm::vec3 steepColor = glm::vec3(0.4);
 
 bool doErosion = false;
 
 void setup() {
-	projection = glm::perspective(glm::radians(fov), (float)WIDTH/(float)HEIGHT, 0.1f, 1024.0f);
+	projection = glm::perspective(glm::radians(fov), (float)WIDTH/(float)HEIGHT, 0.1f, (float)(3 * mapSize));
 
 	generateNoiseMap(mapSize, heightmap, lacunarity, persistence, numOctaves, normalise);
 };
@@ -66,86 +66,3 @@ std::function<void()> eventHandler = [&](){
 	}
 };
 
-// Model Constructing Function
-std::function<void(Model* m)> _construct = [&](Model* h){
-	//Loop over all positions and add the triangles!
-	for(int i = 0; i < mapSize-1; i++){
-		for(int j = 0; j < mapSize-1; j++){
-
-			//Add to Position Vector
-			glm::vec3 a = glm::vec3(i, scale*heightmap[i][j], j);
-			glm::vec3 b = glm::vec3(i+1, scale*heightmap[i+1][j], j);
-			glm::vec3 c = glm::vec3(i, scale*heightmap[i][j+1], j+1);
-			glm::vec3 d = glm::vec3(i+1, scale*heightmap[i+1][j+1], j+1);
-
-			//UPPER TRIANGLE
-
-			//Add Indices
-			h->indices.push_back(h->positions.size()/3+0);
-			h->indices.push_back(h->positions.size()/3+1);
-			h->indices.push_back(h->positions.size()/3+2);
-			h->indices.push_back(h->positions.size()/3+3);
-			h->indices.push_back(h->positions.size()/3+4);
-			h->indices.push_back(h->positions.size()/3+5);
-			h->indices.push_back(h->positions.size()/3+6);
-			h->indices.push_back(h->positions.size()/3+7);
-			h->indices.push_back(h->positions.size()/3+8);
-
-			h->positions.push_back(a.x);
-			h->positions.push_back(a.y);
-			h->positions.push_back(a.z);
-			h->positions.push_back(b.x);
-			h->positions.push_back(b.y);
-			h->positions.push_back(b.z);
-			h->positions.push_back(c.x);
-			h->positions.push_back(c.y);
-			h->positions.push_back(c.z);
-
-			glm::vec3 aNorm = surfaceNormal(scale, heightmap, i, j);
-			glm::vec3 bNorm = surfaceNormal(scale, heightmap, i+1, j);
-			glm::vec3 cNorm = surfaceNormal(scale, heightmap, i, j+1);
-			glm::vec3 dNorm = surfaceNormal(scale, heightmap, i+1, j+1);
-
-			h->normals.push_back(aNorm.x);
-			h->normals.push_back(aNorm.y);
-			h->normals.push_back(aNorm.z);
-			h->normals.push_back(bNorm.x);
-			h->normals.push_back(bNorm.y);
-			h->normals.push_back(bNorm.z);
-			h->normals.push_back(cNorm.x);
-			h->normals.push_back(cNorm.y);
-			h->normals.push_back(cNorm.z);
-
-			//Lower Triangle
-			h->indices.push_back(h->positions.size()/3+0);
-			h->indices.push_back(h->positions.size()/3+1);
-			h->indices.push_back(h->positions.size()/3+2);
-			h->indices.push_back(h->positions.size()/3+3);
-			h->indices.push_back(h->positions.size()/3+4);
-			h->indices.push_back(h->positions.size()/3+5);
-			h->indices.push_back(h->positions.size()/3+6);
-			h->indices.push_back(h->positions.size()/3+7);
-			h->indices.push_back(h->positions.size()/3+8);
-
-			h->positions.push_back(d.x);
-			h->positions.push_back(d.y);
-			h->positions.push_back(d.z);
-			h->positions.push_back(c.x);
-			h->positions.push_back(c.y);
-			h->positions.push_back(c.z);
-			h->positions.push_back(b.x);
-			h->positions.push_back(b.y);
-			h->positions.push_back(b.z);
-
-			h->normals.push_back(dNorm.x);
-			h->normals.push_back(dNorm.y);
-			h->normals.push_back(dNorm.z);
-			h->normals.push_back(cNorm.x);
-			h->normals.push_back(cNorm.y);
-			h->normals.push_back(cNorm.z);
-			h->normals.push_back(bNorm.x);
-			h->normals.push_back(bNorm.y);
-			h->normals.push_back(bNorm.z);
-		}
-	}
-};
