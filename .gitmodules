@@ -1,3 +1,0 @@
-[submodule "src/include/TinyEngine"]
-	path = src/include/TinyEngine
-	url = https://github.com/molonepa/TinyEngine.git
