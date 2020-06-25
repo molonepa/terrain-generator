@@ -33,7 +33,6 @@ After:
 
 * Simulated vegetation
 * Different hardness levels for different materials
-* Thermal erosion
-* Glacial erosion
+* Different types of erosion (thermal, glacial, wind)
 
-[linoise]: http://libnoise.sourceforge.net/index.html
+[libnoise]: http://libnoise.sourceforge.net/index.html
