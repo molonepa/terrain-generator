@@ -1,11 +1,13 @@
 #include <math.h>
 #include <time.h>
+#include <vector>
 #include <noise/noise.h>
 #include "include/noiseMapGeneration.h"
 
 int SEED = time(NULL);
 
-void generateNoiseMap(int mapSize, float map[][1024], float lacunarity, float persistence, int octaves, bool normalise){
+//void generateNoiseMap(int mapSize, float** map, float lacunarity, float persistence, int octaves, bool normalise){
+void generateNoiseMap(int mapSize, std::vector<std::vector<float>>& map, float lacunarity, float persistence, int octaves, bool normalise){
 	noise::module::Perlin perlin;
 	perlin.SetOctaveCount(octaves);
 	perlin.SetFrequency(1.0);
@@ -18,7 +20,9 @@ void generateNoiseMap(int mapSize, float map[][1024], float lacunarity, float pe
 		for (int x = 0; x < mapSize; x++) {
 			float nx = (float)x / (float)mapSize;
 			float ny = (float)y / (float)mapSize;
-			map[x][y] = -fabs(perlin.GetValue(ny, nx, SEED));
+			float p = -fabs(perlin.GetValue(ny, nx, SEED));
+
+			map[x][y] = p;
 
 			if (map[x][y] > max) { max = map[x][y]; }
 			if (map[x][y] < min) { min = map[x][y]; }
